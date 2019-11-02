@@ -25,14 +25,20 @@ public class StockServiceImpl implements StockService {
 
 	@Override
 	public void calculateStockDividendYield(String stockSymbol, String stockPrice) throws Exception {
+		
+		System.out.println("Calculating dividend yield ");
 
 		Stock stock = getStockFromMemory(stockSymbol.toUpperCase());
 
+		if (stock == null) {
+
+			throw new Exception("Stock not found");
+
+		}
+
 		double price = Double.parseDouble(stockPrice);
 
-		validate(stock, price);
-
-		System.out.println(stock.toString());
+		// System.out.println(stock.toString());
 
 		if (StockType.PREFERRED.equals(stock.getType())) {
 
@@ -46,7 +52,18 @@ public class StockServiceImpl implements StockService {
 
 	}
 
-	private void validate(Stock stock, Double stockPrice) throws Exception {
+	@Override
+	public Stock getStockFromMemory(String stockSymbol) {
+
+		return stockDao.getStock(stockSymbol);
+	}
+
+	@Override
+	public void calculateStockPERatio(String stockSymbol, String stockPrice) throws Exception {
+		
+		System.out.println("Calculating P/E");
+
+		Stock stock = getStockFromMemory(stockSymbol.toUpperCase());
 
 		if (stock == null) {
 
@@ -54,26 +71,7 @@ public class StockServiceImpl implements StockService {
 
 		}
 
-		if (stockPrice <= 0) {
-
-			throw new Exception("Provided Price must be greated than 0");
-
-		}
-	}
-
-	private Stock getStockFromMemory(String stockSymbol) {
-
-		return stockDao.getStock(stockSymbol);
-	}
-
-	@Override
-	public void calculateStockPERatio(String stockSymbol, String stockPrice) throws Exception {
-
-		Stock stock = getStockFromMemory(stockSymbol.toUpperCase());
-
 		double price = Double.parseDouble(stockPrice);
-
-		validate(stock, price);
 
 		if (!(stock.getLastDividend() <= 0)) {
 
