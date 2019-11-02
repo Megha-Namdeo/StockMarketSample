@@ -15,7 +15,6 @@ public class Trade {
 	private double price;
 
 	public Trade(Stock stock, Date timeStamp, int quantity, TradeType type, double price) {
-		super();
 		this.stock = stock;
 		this.timeStamp = timeStamp;
 		this.quantity = quantity;
