@@ -18,9 +18,10 @@ public class StockApplication {
 
 	public static void main(String[] args) {
 
-		System.out.println("For calculating dividend yield for stock: enter DIV ");
+		System.out.println("For calculating dividend yield for stock: Enter DIV ");
 		System.out.println("For calculating P/E ratio for stock : Enter PE ");
 		System.out.println("For storing trade values for stock : Enter TRADE ");
+		System.out.println("For calculating Volume Weighted Stock Price based on trades in past 15 minutes : Enter VOL ");
 		System.out.println("For exit : Enter EXIT");
 
 		try (Scanner scanner = new Scanner(System.in)) {
@@ -90,6 +91,14 @@ public class StockApplication {
 				tradeService.addTrade(stockSymbol, quantity, indicator, stockPrice);
 
 				break;
+				
+			case "VOL":
+				
+				System.out.println("Please provide stock symbol:");
+
+				stockSymbol = scanner.nextLine();
+				
+				tradeService.calculateStockPriceTradeMinutes(stockSymbol);
 
 			case "EXIT":
 

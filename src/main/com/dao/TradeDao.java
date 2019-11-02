@@ -2,16 +2,15 @@ package main.com.dao;
 
 import java.util.List;
 
-import main.com.model.Stock;
 import main.com.model.Trade;
 
 public interface TradeDao {
 
-	void addTrade(Trade trade);
+	void addTrade(String stockSymbol, List<Trade> tradeList);
 	
-	List<Trade> getAllTrades();
+	List<Trade> getAllTrades(String stockSymbol);
 
-	List<Trade> getTrades(Stock stock, int lastMinutes);
+	List<Trade> getTradesInFifteenMinute(String stockSymbol);
 
 	
 }

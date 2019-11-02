@@ -61,5 +61,11 @@ public class Trade {
 	public void setPrice(double price) {
 		this.price = price;
 	}
+	
+	@Override
+	public String toString() {
+		return "Trade [stock=" + stock + ", timeStamp=" + timeStamp + ", quantity=" + quantity + ", type=" + type
+				+ ", price=" + price + "]";
+	}
 
 }

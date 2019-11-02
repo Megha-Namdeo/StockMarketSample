@@ -61,4 +61,11 @@ public class Stock {
 	  public void setParValue(double parValue) {
 	    this.parValue = parValue;
 	  }
+
+	@Override
+	public String toString() {
+		return "Stock [symbol=" + symbol + ", type=" + type + ", lastDividend=" + lastDividend + ", fixedDividend="
+				+ fixedDividend + ", parValue=" + parValue + "]";
+	}
+	  
 }
