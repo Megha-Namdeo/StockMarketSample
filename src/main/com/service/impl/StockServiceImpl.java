@@ -25,7 +25,7 @@ public class StockServiceImpl implements StockService {
 
 	@Override
 	public void calculateStockDividendYield(String stockSymbol, String stockPrice) throws Exception {
-		
+
 		System.out.println("Calculating dividend yield ");
 
 		Stock stock = getStockFromMemory(stockSymbol.toUpperCase());
@@ -38,15 +38,15 @@ public class StockServiceImpl implements StockService {
 
 		double price = Double.parseDouble(stockPrice);
 
-		// System.out.println(stock.toString());
-
 		if (StockType.PREFERRED.equals(stock.getType())) {
 
-			System.out.println("StockDividendYield ::" + (stock.getFixedDividend() * stock.getParValue()) / price);
+			double result = (stock.getFixedDividend() * stock.getParValue()) / price;
+
+			System.out.println("Stock Dividend Yield ::" + roundOff(result));
 
 		} else {
 
-			System.out.println("StockDividendYield :: " + stock.getLastDividend() / price);
+			System.out.println("Stock Dividend Yield :: " + roundOff(stock.getLastDividend() / price));
 
 		}
 
@@ -60,7 +60,7 @@ public class StockServiceImpl implements StockService {
 
 	@Override
 	public void calculateStockPERatio(String stockSymbol, String stockPrice) throws Exception {
-		
+
 		System.out.println("Calculating P/E");
 
 		Stock stock = getStockFromMemory(stockSymbol.toUpperCase());
@@ -75,13 +75,19 @@ public class StockServiceImpl implements StockService {
 
 		if (!(stock.getLastDividend() <= 0)) {
 
-			System.out.println("StockP/ERatio :: " + price / stock.getLastDividend());
+			System.out.println("Stock P/E Ratio :: " + roundOff(price / stock.getLastDividend()));
 
 		} else {
 
-			System.out.println("StockP/ERatio :: " + "0.0");
+			System.out.println("Stock P/E Ratio :: " + "0.0");
 
 		}
+
+	}
+
+	private static double roundOff(double value) {
+
+		return (double) Math.round(value * 100) / 100;
 
 	}
 

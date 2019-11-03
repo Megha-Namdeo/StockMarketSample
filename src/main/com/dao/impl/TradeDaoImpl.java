@@ -24,9 +24,9 @@ public class TradeDaoImpl implements TradeDao {
 	private static List<Trade> teaList = new ArrayList<>();
 
 	{
-		teaList.add(new Trade(new Stock("TEA", StockType.COMMON, 0, 0, 100), new Date(), 6, TradeType.BUY, 30D));
-		teaList.add(new Trade(new Stock("TEA", StockType.COMMON, 0, 0, 100), new Date(), 10, TradeType.SELL, 10D));
-		teaList.add(new Trade(new Stock("TEA", StockType.COMMON, 0, 0, 100), new Date(), 3, TradeType.BUY, 20D));
+		teaList.add(new Trade(new Stock("TEA", StockType.COMMON, 0, 0, 100), new Date(), 6, TradeType.BUY, 10D));
+		teaList.add(new Trade(new Stock("TEA", StockType.COMMON, 0, 0, 100), new Date(), 10, TradeType.SELL, 20D));
+		teaList.add(new Trade(new Stock("TEA", StockType.COMMON, 0, 0, 100), new Date(), 3, TradeType.BUY, 3D));
 		tradeData.put("TEA", teaList);
 
 	}
@@ -66,12 +66,12 @@ public class TradeDaoImpl implements TradeDao {
 		List<Trade> tradeList = getAllTrades(stockSymbol);
 
 		for (Trade trade : tradeList) {
-			
-			LocalDateTime tradeDate = LocalDateTime.ofInstant(trade.getTimeStamp().toInstant(), ZoneId.systemDefault()); 
-			
+
+			LocalDateTime tradeDate = LocalDateTime.ofInstant(trade.getTimeStamp().toInstant(), ZoneId.systemDefault());
+
 			LocalDateTime systemTime = LocalDateTime.now();
 
-			long differenceInTime = Duration.between(tradeDate, systemTime ).toMillis();
+			long differenceInTime = Duration.between(tradeDate, systemTime).toMillis();
 
 			if (differenceInTime <= fifteenMinutes) {
 
@@ -81,6 +81,20 @@ public class TradeDaoImpl implements TradeDao {
 		}
 
 		return tradeListInFifteenMinute;
+	}
+
+	@Override
+	public List<Trade> getAllTrades() {
+
+		List<Trade> tradeList = new ArrayList<>();
+
+		for (String stockSymbol : tradeData.keySet()) {
+
+			tradeList.addAll(tradeData.get(stockSymbol));
+
+		}
+
+		return tradeList;
 	}
 
 }

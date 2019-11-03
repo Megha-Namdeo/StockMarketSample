@@ -12,5 +12,7 @@ public interface TradeDao {
 
 	List<Trade> getTradesInFifteenMinute(String stockSymbol);
 
+	List<Trade> getAllTrades();
+
 	
 }

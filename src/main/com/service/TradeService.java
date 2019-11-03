@@ -6,4 +6,6 @@ public interface TradeService {
 
 	void calculateStockPriceTradeMinutes(String stockSymbol) throws Exception;
 
+	void calculateGBCE() throws Exception;
+
 }

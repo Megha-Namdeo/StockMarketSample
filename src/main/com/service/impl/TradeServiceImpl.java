@@ -101,17 +101,51 @@ public class TradeServiceImpl implements TradeService {
 				totalTradeQuantity = totalTradeQuantity + trade.getQuantity();
 
 			}
-			
+
 			double result = totalTradePrice / totalTradeQuantity;
 
-			System.out.println("Volume Weighted Stock Price based on trades in past 15 minutes: "
-					+ result);
+			System.out.println("Volume Weighted Stock Price based on trades in past 15 minutes: " + roundOff(result));
 
 		} else {
 
 			System.out.println("Trade is empty for :" + stock.getSymbol());
 
 		}
+
+	}
+
+	@Override
+	public void calculateGBCE() throws Exception {
+
+		System.out.println("Calculating GBCE for all Stock");
+
+		List<Trade> tradeList = tradeDao.getAllTrades();
+
+		if (tradeList != null && !tradeList.isEmpty()) {
+
+			double totalPrice = 1;
+
+			for (Trade trade : tradeList) {
+
+				totalPrice *= trade.getPrice();
+
+			}
+
+			double result = Math.pow(totalPrice, (1.0 / tradeList.size()));
+
+			System.out.println("GBCE for all stocks present " + roundOff(result));
+
+		} else {
+
+			System.out.println("TradeList is empty - cannot calculate GBCE");
+
+		}
+
+	}
+
+	private static double roundOff(double value) {
+
+		return (double) Math.round(value * 100) / 100;
 
 	}
 
