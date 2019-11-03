@@ -2,6 +2,7 @@ package com.stock.service.impl;
 
 import com.stock.dao.StockDao;
 import com.stock.dao.impl.StockDaoImpl;
+import com.stock.exception.StockNotFound;
 import com.stock.model.Stock;
 import com.stock.model.StockType;
 import com.stock.service.StockService;
@@ -24,7 +25,7 @@ public class StockServiceImpl implements StockService {
 	}
 
 	@Override
-	public void calculateStockDividendYield(String stockSymbol, double stockPrice) throws Exception {
+	public void calculateStockDividendYield(String stockSymbol, double stockPrice) throws StockNotFound {
 
 		System.out.println("Calculating dividend yield ");
 
@@ -32,7 +33,7 @@ public class StockServiceImpl implements StockService {
 
 		if (stock == null) {
 
-			throw new Exception("Stock not found");
+			throw new StockNotFound("Stock not found");
 
 		}
 
@@ -57,7 +58,7 @@ public class StockServiceImpl implements StockService {
 	}
 
 	@Override
-	public void calculateStockPERatio(String stockSymbol, double stockPrice) throws Exception {
+	public void calculateStockPERatio(String stockSymbol, double stockPrice) throws StockNotFound {
 
 		System.out.println("Calculating P/E");
 
@@ -65,7 +66,7 @@ public class StockServiceImpl implements StockService {
 
 		if (stock == null) {
 
-			throw new Exception("Stock not found");
+			throw new StockNotFound("Stock not found");
 
 		}
 

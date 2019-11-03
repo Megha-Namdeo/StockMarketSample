@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.stock.dao.TradeDao;
 import com.stock.dao.impl.TradeDaoImpl;
+import com.stock.exception.StockNotFound;
+import com.stock.exception.TradeNotFound;
 import com.stock.model.Stock;
 import com.stock.model.Trade;
 import com.stock.model.TradeType;
@@ -33,7 +35,7 @@ public class TradeServiceImpl implements TradeService {
 	}
 
 	@Override
-	public void addTrade(String stockSymbol, int quantity, TradeType indicator, double stockPrice) throws Exception {
+	public void addTrade(String stockSymbol, int quantity, TradeType indicator, double stockPrice) throws StockNotFound {
 
 		System.out.println("Storing trade values");
 
@@ -41,7 +43,7 @@ public class TradeServiceImpl implements TradeService {
 
 		if (stock == null) {
 
-			throw new Exception("Stock not found");
+			throw new StockNotFound("Stock not found");
 
 		}
 
@@ -68,7 +70,7 @@ public class TradeServiceImpl implements TradeService {
 	}
 
 	@Override
-	public void calculateStockPriceTradeMinutes(String stockSymbol) throws Exception {
+	public void calculateStockPriceTradeMinutes(String stockSymbol) throws StockNotFound, TradeNotFound {
 
 		System.out.println("Calculating Volume Weighted Stock Price based on trades in past 15 minutes");
 
@@ -76,7 +78,7 @@ public class TradeServiceImpl implements TradeService {
 
 		if (stock == null) {
 
-			throw new Exception("Stock not found");
+			throw new StockNotFound("Stock not found");
 
 		}
 
@@ -109,7 +111,7 @@ public class TradeServiceImpl implements TradeService {
 	}
 
 	@Override
-	public void calculateGBCE() throws Exception {
+	public void calculateGBCE() {
 
 		System.out.println("Calculating GBCE for all Stock");
 

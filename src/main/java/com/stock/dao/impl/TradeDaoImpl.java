@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.stock.dao.TradeDao;
+import com.stock.exception.TradeNotFound;
 import com.stock.model.Stock;
 import com.stock.model.StockType;
 import com.stock.model.Trade;
@@ -57,7 +58,7 @@ public class TradeDaoImpl implements TradeDao {
 	}
 
 	@Override
-	public List<Trade> getTradesInFifteenMinute(String stockSymbol) {
+	public List<Trade> getTradesInFifteenMinute(String stockSymbol) throws TradeNotFound {
 
 		final int fifteenMinutes = 15 * 60 * 1000;
 
@@ -65,19 +66,28 @@ public class TradeDaoImpl implements TradeDao {
 
 		List<Trade> tradeList = getAllTrades(stockSymbol);
 
-		for (Trade trade : tradeList) {
+		if (tradeList != null && !tradeList.isEmpty()) {
 
-			LocalDateTime tradeDate = LocalDateTime.ofInstant(trade.getTimeStamp().toInstant(), ZoneId.systemDefault());
+			for (Trade trade : tradeList) {
 
-			LocalDateTime systemTime = LocalDateTime.now();
+				LocalDateTime tradeDate = LocalDateTime.ofInstant(trade.getTimeStamp().toInstant(),
+						ZoneId.systemDefault());
 
-			long differenceInTime = Duration.between(tradeDate, systemTime).toMillis();
+				LocalDateTime systemTime = LocalDateTime.now();
 
-			if (differenceInTime <= fifteenMinutes) {
+				long differenceInTime = Duration.between(tradeDate, systemTime).toMillis();
 
-				tradeListInFifteenMinute.add(trade);
+				if (differenceInTime <= fifteenMinutes) {
+
+					tradeListInFifteenMinute.add(trade);
+				}
+
 			}
+			
+		} else {
 
+			throw new TradeNotFound("No trade found for given Stock " + stockSymbol);
+			
 		}
 
 		return tradeListInFifteenMinute;
