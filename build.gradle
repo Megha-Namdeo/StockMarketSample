@@ -1,0 +1,26 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+archivesBaseName = 'stock-market'
+group = 'com.stock'
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = 1.8
+
+jar {
+    baseName = 'stock-market'
+    version = '0.0.1-SNAPSHOT'
+    
+    manifest {
+        attributes 'Main-Class': 'com.stock.app.StockApplication'
+    }
+}
+
+
+dependencies {
+
+	testCompile 'junit:junit:4.12'
+   compile  'log4j:log4j:1.2.16'
+} 
